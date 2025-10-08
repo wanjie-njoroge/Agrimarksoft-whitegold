@@ -1,0 +1,338 @@
+ <!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AGRIMARKSOFT - WHITEGOLD</title>
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/5b6f9f3f2b.js" crossorigin="anonymous"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+ <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <header class="app-header center-header">
+  <div class="brand center">
+    <div>
+      <h1>AGRIMARKSOFT - <span class="highlight">WHITEGOLD</span></h1>
+      <p class="tagline">AI-enabled market linkages for camel milk (White Gold)</p>
+    </div>
+  </div>
+</header>
+
+
+<div class="container" role="main">
+  <nav class="sidebar" aria-label="Main navigation">
+    <div class="title">
+      <div>
+        <strong style="color:var(--dark-green)">Dashboard</strong>
+        <div style="font-size:12px;color:#225a2c;margin-top:4px">AGRIMARKSOFT-WHITEGOLD</div>
+      </div>
+      <div class="badge">USSD + SMS</div>
+    </div>
+
+    <ul class="menu" role="tablist" aria-orientation="vertical">
+      <li><button class="tab-btn active" data-tab="home"><i class="fa-solid fa-house"></i> Home</button></li>
+      <li><button class="tab-btn active" data-tab="farmers" role="tab" aria-selected="true"><i class="fa-solid fa-people-roof"></i> Farmers</button></li>
+      <li><button class="tab-btn" data-tab="prices" role="tab"><i class="fa-solid fa-money-bill-trend-up"></i> Market Prices</button></li>
+      <li><button class="tab-btn" data-tab="chatbot" role="tab"><i class="fa-solid fa-comment-dots"></i> AI Chatbot / SMS</button></li>
+      <li><button class="tab-btn" data-tab="analytics" role="tab"><i class="fa-solid fa-chart-simple"></i> Analytics</button></li>
+      
+  </ul>
+
+    <div style="margin-top:18px">
+      <div style="font-size:13px;color:#1b5a2b;font-weight:700">Quick USSD</div>
+      <div style="margin-top:8px;font-size:13px;color:#2b3b2b">
+        Dial <strong>*123#</strong> → Get prices → Enter litres → Confirm sale
+      </div>
+      <div style="margin-top:12px">
+        <button class="btn" id="open-usss">Open USSD Simulator</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="canvas" tabindex="0">
+    <!-- Hero -->
+    <div class="card hero">
+      <div class="hero-left">
+        
+      </div>
+      
+    
+<section id="home" class="card panel" data-panel>
+  <div style="text-align:center;padding:40px 20px;">
+    <h2 style="color:var(--dark-green);font-size:28px;margin-bottom:10px;">
+      Welcome to AGRIMARKSoft – WhiteGOLD
+    </h2>
+    <p style="font-size:16px;color:#2b4a2c;max-width:700px;margin:0 auto 20px;">
+      A digital platform that connects pastoralist camel milk producers to urban markets using AI and data-driven insights. 
+      Our mission is to improve market access, increase transparency, and support sustainable livelihoods for pastoralist communities.
+    </p>
+    <button class="btn" id="get-started"><i class="fa-solid fa-seedling"></i> Get Started</button>
+  </div>
+</section> 
+
+    <!-- Dynamic content panels -->
+    <section id="farmers" class="card panel" data-panel style="display:none">
+      <h3 style="margin-top:0;color:var(--dark-green)">Farmer Module — Sell your White Gold</h3>
+      <div class="grid">
+        <div>
+          <form class="farmer-form" id="farmer-form" onsubmit="return false;">
+            <label for="farmer-name">Farmer name</label>
+            <div class="field">
+              <input id="farmer-name" placeholder="e.g. Ali Hassan" required>
+            </div>
+
+            <label for="region">Region</label>
+            <div class="field">
+              <select id="region">
+                <option>Garissa</option>
+                <option>Wajir</option>
+                <option>Mandera</option>
+                <option>Turkana</option>
+              </select>
+            </div>
+
+            <label for="litres">Litres available (per week)</label>
+            <div class="field">
+              <input id="litres" type="number" min="1" value="30">
+              <select id="city-select" aria-label="Choose market">
+                <option value="Nairobi">Nairobi</option>
+                <option value="Mombasa">Mombasa</option>
+                <option value="Kisumu">Kisumu</option>
+              </select>
+            </div>
+
+            <label>Payment method</label>
+            <div class="field">
+              <select id="payment">
+                <option>Mobile Money (M-Pesa)</option>
+                <option>Bank Transfer</option>
+                <option>Cash on delivery</option>
+              </select>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:8px">
+              <button class="btn" id="estimate-btn"><i class="fa-solid fa-calculator"></i> Estimate Income</button>
+              <button class="btn secondary" id="publish-btn"><i class="fa-solid fa-upload"></i> Publish Offer</button>
+            </div>
+          </form>
+
+          <div id="farmer-result" style="margin-top:12px;display:none" aria-live="polite">
+            <div style="background:linear-gradient(90deg,#ffffff,#f7fff0);padding:12px;border-radius:8px">
+              <div id="est-output" style="font-weight:700;color:var(--dark-green)"></div>
+              <div id="est-details" style="font-size:13px;color:#2b4a2c;margin-top:6px"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <aside>
+          <div class="card" style="padding:12px">
+            <h4 style="margin:0 0 8px 0;color:var(--dark-green)">Quick Market Tips</h4>
+            <ul style="margin:0 0 0 16px">
+              <li>Keep milk in clean, covered containers</li>
+              <li>Cool the milk quickly after milking</li>
+              <li>Deliver to verified collection points to avoid wastage</li>
+              <li>Respond to buyer offers quickly via USSD/SMS</li>
+            </ul>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="card" style="padding:12px">
+            <h4 style="margin:0 0 6px 0;color:var(--dark-green)">Recent Offers (live)</h4>
+            <div style="font-size:13px;color:#123a25;margin-top:8px">
+              <strong>Ali H.</strong> — 50 L → Nairobi (Pending) <br>
+              <strong>Sana A.</strong> — 30 L → Mombasa (Accepted) <br>
+              <strong>Mohamed K.</strong> — 20 L → Kisumu (Delivered)
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="prices" class="card panel" data-panel style="display:none">
+      <h3 style="color:var(--dark-green)">Market Prices & Alerts</h3>
+      <p style="margin-top:6px;color:#15401d">Real-time prices and SMS+USSD broadcast simulation</p>
+
+      <div style="display:flex;gap:12px;margin-top:12px">
+        <div style="flex:1">
+          <div class="price-row">
+            <div class="price-city"><span class="dot nairobi" aria-hidden="true"></span><div><strong>Nairobi</strong><div style="font-size:12px;color:#1a4d2b">High urban demand</div></div></div>
+            <div class="price-value" id="price-nairobi">KSh 140</div>
+          </div>
+
+          <div class="price-row">
+            <div class="price-city"><span class="dot mombasa" aria-hidden="true"></span><div><strong>Mombasa</strong><div style="font-size:12px;color:#1a4d2b">Coastal markets</div></div></div>
+            <div class="price-value" id="price-mombasa">KSh 180</div>
+          </div>
+
+          <div class="price-row">
+            <div class="price-city"><span class="dot kisumu" aria-hidden="true"></span><div><strong>Kisumu</strong><div style="font-size:12px;color:#1a4d2b">Lakeside demand</div></div></div>
+            <div class="price-value" id="price-kisumu">KSh 100</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <button class="btn" id="send-sms">Send Price SMS Alert</button>
+            <button class="btn secondary" id="simulate-fluct">Simulate Price Change</button>
+          </div>
+        </div>
+
+        <div style="width:360px">
+          <div class="card" style="padding:10px">
+            <h4 style="margin:0 0 8px 0;color:var(--dark-green)">Recent SMS Alerts</h4>
+            <div id="sms-log" style="font-size:13px;color:#11401f;margin-top:8px;min-height:120px">
+              <div>— No SMS sent yet —</div>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="card" style="padding:10px">
+            <h4 style="margin:0 0 8px 0;color:var(--dark-green)">USSD Example</h4>
+            <div style="font-size:13px;color:#123a25">
+              Dial <strong>*123#</strong> → 1.Prices  2.Publish Offer  3.My Offers <br>
+              (Try the USSD simulator in the sidebar)
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="chatbot" class="card panel" data-panel style="display:none">
+      <h3 style="color:var(--dark-green)">AI Chatbot — Farmer Advisor (Simulated)</h3>
+      <p style="margin-top:6px;color:#15401d">Ask about hygiene, transport, payment, or market advice. Works in English and Kiswahili (sample)</p>
+
+      <div style="display:flex;gap:12px;margin-top:12px">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div class="chat-window" id="chat-window" role="log" aria-live="polite">
+            <div class="bubble bot">Karibu! I'm WhiteGOLD advisor — ask me about prices, milking hygiene, or how to sell your milk.</div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <input id="chat-input" placeholder="Type message (e.g. How to keep milk fresh?)" style="flex:1;padding:10px;border-radius:10px;border:1px solid #e6f3e9;background:#fbfff8">
+            <button class="btn" id="chat-send"><i class="fa-solid fa-paper-plane"></i> Send</button>
+          </div>
+        </div>
+
+        <aside style="width:360px">
+          <div class="card" style="padding:10px">
+            <h4 style="margin:0 0 8px 0;color:var(--dark-green)">Sample Suggestions</h4>
+            <ul style="margin:0 0 0 14px;font-size:13px">
+              <li>How to cool milk quickly?</li>
+              <li>Where to deliver in Nairobi?</li>
+              <li>How to check buyer verification?</li>
+            </ul>
+            <div style="margin-top:8px">
+              <button class="btn small" id="sample1">How to cool milk?</button>
+              <button class="btn small" id="sample2" style="background:var(--accent-yellow);color:var(--dark-green)">Price alerts</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+<section id="analytics" class="card panel" data-panel style="display:none"> 
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <h3 style="color:var(--dark-green)">Analytics Dashboard</h3>
+    <button class="btn small" id="export-report">
+      <i class="fa-solid fa-file-export"></i> Export Report
+    </button>
+
+
+
+
+      <div style="display:flex;gap:12px;margin-top:12px">
+        <div style="flex:1">
+          <div class="stats">
+            <div class="stat">
+              <div style="font-size:13px;color:#2c5e31">Total Weekly Volume</div>
+              <div class="num" id="total-volume">0 L</div>
+            </div>
+            <div class="stat">
+              <div style="font-size:13px;color:#2c5e31">Total Weekly Revenue</div>
+              <div class="num" id="total-revenue">KSh 0</div>
+            </div>
+            <div class="stat">
+              <div style="font-size:13px;color:#2c5e31">Estimated Farmer Income (monthly)</div>
+              <div class="num" id="farmer-income">KSh 0</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px" class="chart-wrap card">
+            <canvas id="volChart" height="140"></canvas>
+          </div>
+        </div>
+
+        <div style="width:360px">
+          <div class="card chart-wrap" style="padding:12px">
+            <h4 style="margin:0 0 8px 0;color:var(--dark-green)">Impact Summary</h4>
+            <table>
+              <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Farmers reached</td><td id="farmers-reached">10,000</td></tr>
+                <tr><td>Wastage reduction</td><td id="waste-reduction">25%</td></tr>
+                <tr><td>Avg price uplift</td><td id="price-uplift">+18%</td></tr>
+                <tr><td>Women participation</td><td id="women-part">42%</td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top:12px;text-align:center">
+              <button class="btn" id="recalc">Recalculate with custom prices</button>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="card" style="padding:12px">
+            <h4 style="margin:0 0 8px 0;color:var(--dark-green)">Simple Budget (sample)</h4>
+            <table>
+              <thead><tr><th>Item</th><th>Cost (KSh)</th></tr></thead>
+              <tbody>
+                <tr><td>USSD Gateway (annual)</td><td>120,000</td></tr>
+                <tr><td>SMS credits (monthly)</td><td>30,000</td></tr>
+                <tr><td>Platform dev (MVP)</td><td>450,000</td></tr>
+                <tr><td>Training & outreach</td><td>200,000</td></tr>
+                <tr style="font-weight:800"><td>Total (est.)</td><td>800,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <canvas id="analyticsChart" height="220"></canvas>
+    </section>
+
+  </main>
+</div>
+
+<!-- USSD Modal -->
+<div id="ussd-modal" style="display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:70;align-items:center;justify-content:center">
+  <div style="width:360px;background:white;padding:14px;border-radius:12px;box-shadow:var(--shadow)">
+    <h4 style="margin:0 0 6px 0;color:var(--dark-green)">USSD Simulator — *123#</h4>
+    <div id="ussd-screen" style="background:#fbfff8;border-radius:10px;padding:10px;height:220px;overflow:auto"></div>
+    <div style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end">
+      <button class="small" id="ussd-close" style="background:#efefef;color:#333">Close</button>
+    </div>
+  </div>
+</div>
+      
+<script src="script.js"></script>
+
+<footer class="site-footer">
+  © 2025 AGRIMARKSoft — WhiteGOLD • all rights reserved.
+</footer>
+</body>
+</html>
+
+
+</body>
+
+</html>
+   
+ 
